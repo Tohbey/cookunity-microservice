@@ -15,7 +15,7 @@ app.use(cors());
 require('./startup/routes')(app);
 require('./startup/db')();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 require('./eureka')(port);
 
 let routesList = listAllRoutes(app);
