@@ -5,6 +5,7 @@ module.exports = function(PORT){
         instance:{
             app:"cook-unit-chef-service",
             hostName: 'localhost',
+            instanceId:'cook-unit-chef-service-'+PORT,
             ipAddr:'127.0.0.1',
             statusPageUrl:'http://localhost:3000',
             vipAddress:'cook-unit-chef-service',
