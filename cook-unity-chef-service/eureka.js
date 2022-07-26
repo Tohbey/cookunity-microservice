@@ -3,12 +3,12 @@ const Eureka  = require("eureka-js-client").Eureka;
 module.exports = function(PORT){
     const client = new Eureka({
         instance:{
-            app:"cook-unit-chef-service",
+            app:"cook-unity-chef-service",
             hostName: 'localhost',
-            instanceId:'cook-unit-chef-service-'+PORT,
+            instanceId:'cook-unity-chef-service-'+PORT,
             ipAddr:'127.0.0.1',
-            statusPageUrl:'http://localhost:3000',
-            vipAddress:'cook-unit-chef-service',
+            statusPageUrl:'http://localhost:'+PORT,
+            vipAddress:'cook-unity-chef-service',
             port :{
                 $:PORT,
                 '@enabled': 'true'
@@ -29,6 +29,6 @@ module.exports = function(PORT){
     
     client.logger.level('debug')
     client.start(error => {
-        console.log(error || "Nodejs Eureka Started");
+        console.log(error || "Chef-Service connected to Eureka Service");
     })
 }
