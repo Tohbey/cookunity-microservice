@@ -4,7 +4,7 @@ const { MSG_TYPES } = require('../constant/types');
 
 exports.status = async (req, res, next) => {
     try {
-        JsonResponse(res, 200,"Booking Service Working");
+        JsonResponse(res, 200,"chef Service Working");
     }catch (error){
         JsonResponse(res, error.statusCode, error.msg)
         next(error)
