@@ -3,12 +3,12 @@ const Eureka  = require("eureka-js-client").Eureka;
 module.exports = function(PORT){
     const client = new Eureka({
         instance:{
-            app:"cook-unity-chef-service",
+            app:"chef-ws",
             hostName: 'localhost',
-            instanceId:'cook-unity-chef-service-'+PORT,
+            instanceId:'chef-ws-'+PORT,
             ipAddr:'127.0.0.1',
             statusPageUrl:'http://localhost:'+PORT,
-            vipAddress:'cook-unity-chef-service',
+            vipAddress:'chef-ws',
             port :{
                 $:PORT,
                 '@enabled': 'true'
