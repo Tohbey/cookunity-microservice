@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 
-const mealSchema = new mongoose.Schema({
+const menuSchema = new mongoose.Schema({
 
 },{
     timestamps: true
 });
 
-const Meal = mongoose.model("Meal", mealSchema);
+const Menu = mongoose.model("Menu", menuSchema);
 
-module.exports = Meal;
+module.exports = Menu;
