@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.UUID;
@@ -27,5 +28,6 @@ public class RememberToken extends BaseEntity{
     private Date createdAt;
 
     @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }
