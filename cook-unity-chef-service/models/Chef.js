@@ -30,6 +30,14 @@ const chefSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    emailChef:{
+        type: String,
+        require: true
+    },
+    password:{
+        type: String,
+        require: true
+    },
     certificate:{
         type: Boolean,
         require: true
