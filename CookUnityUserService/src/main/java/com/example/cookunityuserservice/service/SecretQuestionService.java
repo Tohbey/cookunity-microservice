@@ -12,5 +12,5 @@ public interface SecretQuestionService {
 
     Optional<SecretQuestionDTO> getSecretQuestion(UUID id);
 
-    SecretQuestionDTO saveSecretQuestion(SecretQuestion secretQuestion);
+    SecretQuestionDTO saveSecretQuestion(SecretQuestion secretQuestion) throws Exception;
 }

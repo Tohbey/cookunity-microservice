@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface RememberTokenService {
     Optional<RememberTokenDTO> getRememberToken(UUID id);
 
-    RememberTokenDTO saveToken(RememberToken rememberToken);
+    RememberTokenDTO saveToken(RememberToken rememberToken) throws Exception;
 
     void deleteToken(UUID id);
 }
