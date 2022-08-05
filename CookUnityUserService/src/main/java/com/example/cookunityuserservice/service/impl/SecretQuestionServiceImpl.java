@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class SecretQuestionServiceImpl implements SecretQuestionService{
-    private SecretQuestionRepository secretQuestionRepository;
+    private final SecretQuestionRepository secretQuestionRepository;
 
     public SecretQuestionServiceImpl(SecretQuestionRepository secretQuestionRepository){
         this.secretQuestionRepository = secretQuestionRepository;

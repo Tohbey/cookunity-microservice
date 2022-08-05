@@ -15,8 +15,8 @@ import java.util.UUID;
 
 @Service
 public class RememberTokenImpl implements RememberTokenService {
-    private RememberTokenRepository rememberTokenRepository;
-    private RememberTokenMapper rememberTokenMapper;
+    private final RememberTokenRepository rememberTokenRepository;
+    private final RememberTokenMapper rememberTokenMapper;
     public RememberTokenImpl(RememberTokenRepository rememberTokenRepository, RememberTokenMapper rememberTokenMapper){
         this.rememberTokenRepository = rememberTokenRepository;
         this.rememberTokenMapper = rememberTokenMapper;
