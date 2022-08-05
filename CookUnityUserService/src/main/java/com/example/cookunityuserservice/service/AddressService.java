@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface AddressService {
-    List<AddressDTO> getAddressesForCurrentUser();
+    List<AddressDTO> getAddressesForCurrentUser(UUID userId);
 
     Optional<AddressDTO> getAddress(UUID id);
 
@@ -16,5 +16,5 @@ public interface AddressService {
 
     Optional<AddressDTO> updateAddress(Address address,UUID id);
 
-    AddressDTO saveAddress(Address address);
+    AddressDTO saveAddress(Address address) throws Exception;
 }

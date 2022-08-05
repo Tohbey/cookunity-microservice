@@ -12,4 +12,5 @@ public class AddressDTO {
     private String LGA;
     private String address;
     private Boolean isCurrent;
+    private UUID userId;
 }
