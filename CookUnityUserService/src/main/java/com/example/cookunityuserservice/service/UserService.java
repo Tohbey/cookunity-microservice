@@ -15,7 +15,7 @@ public interface UserService {
 
     UserDTO saveUser(User user) throws Exception;
 
-    void deleteUser(UUID id);
+    void deleteUser(UUID id) throws Exception;
 
     Optional<UserDTO> updateUser(User user, UUID id);
 

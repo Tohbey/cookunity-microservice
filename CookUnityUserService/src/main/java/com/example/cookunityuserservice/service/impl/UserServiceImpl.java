@@ -74,8 +74,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UUID id) {
+    public void deleteUser(UUID id) throws Exception {
+        Optional<User> checkUser = this.userRepository.findById(id);
+        if (checkUser.isPresent()) {
+            throw new Exception("A user with this email already exist " + checkUser.get().getEmail());
+        }
 
+        this.userRepository.deleteById(id);
     }
 
     @Override

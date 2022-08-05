@@ -55,7 +55,11 @@ public class RememberTokenImpl implements RememberTokenService {
     }
 
     @Override
-    public void deleteToken(UUID id) {
+    public void deleteToken(UUID id) throws Exception {
+        Optional<RememberToken> checkToken = this.rememberTokenRepository.findById(id);
+        if(checkToken.isEmpty()){
+            throw new Exception("Token not found");
+        }
         this.rememberTokenRepository.deleteById(id);
     }
 }
