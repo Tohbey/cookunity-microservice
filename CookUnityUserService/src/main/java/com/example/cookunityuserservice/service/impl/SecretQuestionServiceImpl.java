@@ -35,10 +35,7 @@ public class SecretQuestionServiceImpl implements SecretQuestionService{
 
     @Override
     public Optional<SecretQuestionDTO> getSecretQuestion(UUID id) {
-        Optional<SecretQuestion> secretQuestion = this.secretQuestionRepository.findById(id);
-        if(secretQuestion.isEmpty()){
-            throw new NotFoundException("Secret Question not found");
-        }
+        Optional<SecretQuestion> secretQuestion = findSecretQuestion(id);
 
         SecretQuestionDTO secretQuestionDTO = new SecretQuestionDTO();
         secretQuestionDTO.setQuestion(secretQuestion.get().getQuestion());
@@ -64,5 +61,14 @@ public class SecretQuestionServiceImpl implements SecretQuestionService{
         secretQuestionDTO.setId(secretQuestionDTO.getId());
 
         return secretQuestionDTO;
+    }
+
+    private Optional<SecretQuestion> findSecretQuestion(UUID id){
+        Optional<SecretQuestion> secretQuestion = this.secretQuestionRepository.findById(id);
+        if(secretQuestion.isEmpty()){
+            throw new NotFoundException("Secret Question not found");
+        }
+
+        return  secretQuestion;
     }
 }

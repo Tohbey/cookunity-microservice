@@ -96,8 +96,8 @@ public class AddressServiceImpl implements AddressService {
 
         Address savedAddress = this.addressRepository.save(address);
 
-        AddressDTO addressDTO = addressMapper.addressToAddressDTO(address);
-        addressDTO.setUserId(address.getUser().getId());
+        AddressDTO addressDTO = addressMapper.addressToAddressDTO(savedAddress);
+        addressDTO.setUserId(savedAddress.getUser().getId());
         return addressDTO;
     }
 

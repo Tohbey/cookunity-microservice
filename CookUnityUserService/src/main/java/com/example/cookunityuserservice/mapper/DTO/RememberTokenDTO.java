@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class RememberTokenDTO {
+    private UUID id;
     private String token;
     private Date expiredAt;
 

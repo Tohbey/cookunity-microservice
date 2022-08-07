@@ -17,7 +17,6 @@ public class UserDTO {
     private String profile;
     private String currentAddress;
     private AddressListDTO addresses;
-    private RememberTokenDTO tokenDTO;
     private Date createdAt;
     private Date updatedAt;
 
