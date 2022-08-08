@@ -58,6 +58,11 @@ const chefSchema = new mongoose.Schema({
         type: objectId,
         ref:'Menu'
     }],
+    status:{
+        type: String,
+        enum:["Active","Terminated"],
+        default: "Active"
+    },
     bookings:[{
 
     }],
