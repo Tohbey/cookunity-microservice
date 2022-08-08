@@ -6,6 +6,7 @@ import com.example.cookunityuserservice.mapper.DTO.AddressListDTO;
 import com.example.cookunityuserservice.model.Address;
 import com.example.cookunityuserservice.resource.General;
 import com.example.cookunityuserservice.service.AddressService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,7 +85,7 @@ public class AddressController {
             object.setMessage(e.getMessage());
             e.printStackTrace();
         }
-        return ResponseEntity.ok().body(object);
+        return new ResponseEntity<>(object, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
