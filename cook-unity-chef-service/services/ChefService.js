@@ -15,7 +15,7 @@ class ChefService{
     /**
      * Get chefs
      * @param {Number} skip skip
-     * @param {Number} pageSize page size
+     * @param pagesSize
      * @param {Object} filter filter
      */
     static getAllChefs(skip, pagesSize, filter = {}){
@@ -53,7 +53,7 @@ class ChefService{
     }
 
     /**
-     * Terminate User
+     * Terminate Chef
      * @param {Object} chef Chef
      */
     static terminateChef(chef){
