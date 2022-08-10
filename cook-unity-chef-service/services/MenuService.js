@@ -52,7 +52,7 @@ class MenuService{
     }
 
     /**
-     * Get chef
+     * Get Menu
      * @param {Object} filter filter
      */
     static getMenu(filter){
@@ -98,7 +98,7 @@ class MenuService{
 
 
     /**
-     * Delete Chef
+     * Delete Menu
      * @param {Object} chef Chef
      * @param {Object} menuId menuId
      * */
