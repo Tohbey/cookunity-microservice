@@ -33,7 +33,7 @@ class MenuItemService{
     /**
      * Get MenuItem
      * @param {Number} skip skip
-     * @param pagesSize
+     * @param pageSize
      * @param {Object} filter filter
      */
     static getMenuItems(skip, pageSize, filter={}){
