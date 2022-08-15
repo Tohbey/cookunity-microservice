@@ -18,6 +18,8 @@ const MSG_TYPES = Object.freeze({
     NOT_FOUND: "Not Found",
     PERMISSION: "You don't have enough permission to perform this action",
     SERVER_ERROR: "Server Error!",
+    SESSION_EXPIRED: "Session Expired",
+    ACCESS_DENIED:"Access denied",
     INVALID_PASSWORD: "Invalid Password",
     SENT: "Email Sent",
     DOCUMENT_REQUIRED:"Documents/images are required"
