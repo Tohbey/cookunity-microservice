@@ -14,7 +14,11 @@ const complexityOption = {
 
 function validateChef(body){
     const chefSchema = Joi.object({
-
+        emailChef: Joi.string().email().max(50).required(),
+        password: passwordComplexity(complexityOption).required(),
+        chefType: Joi.string().required(),
+        address: Joi.string().required(),
+        userId: Joi.string().required()
     });
     return chefSchema.validate(body)
 }
