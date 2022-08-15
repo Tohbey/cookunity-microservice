@@ -38,6 +38,11 @@ const chefSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    chefType:{
+        type: String,
+        require: true,
+        enum: ["Pastry Chef","Sauce Chef", "Vegetable Chef", "Meat Chef", "Pantry Chef", "Fry Chef", "Grill Chef", "Butcher Chef"]
+    },
     certificate:{
         type: Boolean,
         require: true
@@ -54,18 +59,11 @@ const chefSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    menu:[{
-        type: objectId,
-        ref:'Menu'
-    }],
     status:{
         type: String,
         enum:["Active","Terminated"],
         default: "Active"
     },
-    bookings:[{
-
-    }],
     profileImage: assetSchema
 },{
     timestamps: true
