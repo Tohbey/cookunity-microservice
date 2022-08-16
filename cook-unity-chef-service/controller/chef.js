@@ -127,9 +127,9 @@ exports.updateChef = async (req, res, next) => {
     try {
         const chefId = req.user._id;
 
-        await ChefService.update(chefId, req.body);
+        const chef = await ChefService.update(chefId, req.body);
 
-        JsonResponse(res, 200, MSG_TYPES.UPDATED);
+        JsonResponse(res, 200, MSG_TYPES.UPDATED,chef);
     }catch (error) {
         JsonResponse(res, error.statusCode, error.msg)
         next(error)
