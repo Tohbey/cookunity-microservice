@@ -19,8 +19,8 @@ exports.createMenu = async (req, res, next) => {
 
         JsonResponse(res, 201, MSG_TYPES.CREATED, menu);
     }catch (error) {
-        JsonResponse(res, error.statusCode, error.msg)
-        next(error)
+        JsonResponse(res, error.statusCode, error.msg);
+        next(error);
     }
 }
 
@@ -41,12 +41,12 @@ exports.getAllMenus = async (req, res, next) => {
             pagination: {
                 pageSize, page
             }
-        }
+        };
 
-        JsonResponse(res, 200, MSG_TYPES.FETCHED, menus, meta)
+        JsonResponse(res, 200, MSG_TYPES.FETCHED, menus, meta);
     }catch (error) {
-        JsonResponse(res, error.statusCode, error.msg)
-        next(error)
+        JsonResponse(res, error.statusCode, error.msg);
+        next(error);
     }
 }
 
@@ -71,12 +71,12 @@ exports.getAllMenus = async (req, res, next) => {
             pagination: {
                 pageSize, page
             }
-        }
+        };
 
-        JsonResponse(res, 200, MSG_TYPES.FETCHED, menus, meta)
+        JsonResponse(res, 200, MSG_TYPES.FETCHED, menus, meta);
     }catch (error) {
-        JsonResponse(res, error.statusCode, error.msg)
-        next(error)
+        JsonResponse(res, error.statusCode, error.msg);
+        next(error);
     }
 }
 
@@ -91,14 +91,14 @@ exports.getMenuById = async (req, res, next) => {
     try {
         let filter = {
             _id: req.params.meunId
-        }
+        };
 
         const menu = await MenuService.getMenu(filter);
 
         JsonResponse(res, 200, MSG_TYPES.FETCHED, menu);
     }catch (error) {
-        JsonResponse(res, error.statusCode, error.msg)
-        next(error)
+        JsonResponse(res, error.statusCode, error.msg);
+        next(error);
     }
 }
 
@@ -112,15 +112,15 @@ exports.getMenuById = async (req, res, next) => {
 exports.getMenuByTitle = async (req, res, next) => {
     try {
         let filter = {
-            _id: req.params.menuTitle
-        }
+            title: req.params.menuTitle
+        };
 
         const menu = await MenuService.getMenu(filter);
 
         JsonResponse(res, 200, MSG_TYPES.FETCHED, menu);
     }catch (error) {
-        JsonResponse(res, error.statusCode, error.msg)
-        next(error)
+        JsonResponse(res, error.statusCode, error.msg);
+        next(error);
     }
 }
 
@@ -139,8 +139,8 @@ exports.updateMenu = async (req, res, next) => {
 
         JsonResponse(res, 200, MSG_TYPES.UPDATED, menu);
     }catch (error) {
-        JsonResponse(res, error.statusCode, error.msg)
-        next(error)
+        JsonResponse(res, error.statusCode, error.msg);
+        next(error);
     }
 }
 
@@ -158,7 +158,7 @@ exports.deleteMenu = async (req, res, next) => {
 
         JsonResponse(res, 200, MSG_TYPES.DELETED);
     }catch (error) {
-        JsonResponse(res, error.statusCode, error.msg)
-        next(error)
+        JsonResponse(res, error.statusCode, error.msg);
+        next(error);
     }
 }
