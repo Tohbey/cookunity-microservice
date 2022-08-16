@@ -1,6 +1,6 @@
 const express = require('express');
 const { JsonResponse } = require("../lib/apiResponse");
-const chef = require('../routes/chef');
+const chef = require('../routes/chefRouter');
 
 module.exports = function (app) {
     app.use(express.json({limit: '50mb'}));
