@@ -75,11 +75,15 @@ class IngredientService{
      * Update Ingredient
      * @param {object} ingredientId Ingredient id
      * @param {Object} ingredientObject updated details
+     * @param chefId
      */
-    static updateIngredient(ingredientId, ingredientObject){
+    static updateIngredient(ingredientId, ingredientObject, chefId){
         return new Promise(async (resolve, reject) => {
             try {
-                const ingredient = await Ingredient.findById(ingredientId);
+                const ingredient = await Ingredient.findOne({
+                    _id: ingredientId,
+                    chef: chefId
+                });
 
                 if (!ingredient) {
                     return reject({ statusCode: 404, msg: MSG_TYPES.NOT_FOUND });
