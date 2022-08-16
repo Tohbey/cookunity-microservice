@@ -74,11 +74,15 @@ class MenuItemService{
      * Update MenuItem
      * @param {object} menuItemId menu item's id
      * @param {Object} menuItemObject updated details
+     * @param chefId
      */
-    static updateMenuItem(menuItemId, menuItemObject){
+    static updateMenuItem(menuItemId, menuItemObject, chefId){
         return new Promise(async (resolve, reject) => {
             try {
-                const menuItem = await MenuItem.findById(menuItemId);
+                const menuItem = await MenuItem.findOne({
+                    _id: menuItemId,
+                    chef: chefId
+                });
 
                 if (!menuItem) {
                     return reject({ statusCode: 404, msg: MSG_TYPES.NOT_FOUND });

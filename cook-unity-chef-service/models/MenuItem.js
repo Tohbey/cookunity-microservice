@@ -34,7 +34,7 @@ const menuItemSchema = new mongoose.Schema({
         type: objectId,
         ref:'Chef'
     },
-    title:{
+    name:{
         type: String,
         require: true
     },
