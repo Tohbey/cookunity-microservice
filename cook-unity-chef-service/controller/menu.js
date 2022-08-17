@@ -57,10 +57,10 @@ exports.getAllMenus = async (req, res, next) => {
  * @param {*} res
  * @param next
  */
-exports.getAllMenus = async (req, res, next) => {
+exports.getAllMenusByChef = async (req, res, next) => {
     try {
         let filter = {
-            chef: req.params.chefId
+            chef: req.user._id
         }
         const {page, pageSize, skip } = paginate(req);
 
