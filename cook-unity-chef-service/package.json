@@ -26,6 +26,7 @@
     "mongoose": "^6.4.6",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
+    "randexp": "^0.5.3",
     "winston": "^3.8.1"
   }
 }

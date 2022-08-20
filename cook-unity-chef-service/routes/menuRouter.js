@@ -9,7 +9,7 @@ router.get('/:meunId', controller.menu.getMenuById);
 
 router.get('/title/:menuTitle', controller.menu.getMenuByTitle);
 
-router.get('/menu-items/:meunId', controller.menu.getAllMenuItemsOnMenu);
+router.get('/menu-items/:meunId', controller.menuItem.getAllMenuItemsOnMenu);
 
 router.patch('/:meunId', controller.menu.updateMenu);
 
