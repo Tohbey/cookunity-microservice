@@ -1,4 +1,5 @@
 const { MSG_TYPES } = require('../constant/types');
+const Booking = require('../model/booking');
 
 class BookingService{
 
