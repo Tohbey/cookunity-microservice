@@ -48,10 +48,10 @@ class BookingMealService{
 
     /**
      * Update Booking Meal
-     * @param {Object} bookingId booking's id
-     * @param {Object} bookingObject updated details
+     * @param {Object} bookingMealId booking meal's id
+     * @param {Object} bookingMealObject updated details
      */
-    static updateBookingMeal(bookingId, bookingObject){
+    static updateBookingMeal(bookingMealId, bookingMealObject){
         return new Promise(async (resolve, reject) => {
             try{
 
@@ -63,10 +63,9 @@ class BookingMealService{
 
     /**
      * Remove Booking Meal
-     * @param {Object} bookingId booking's id
-     * @param {Object} bookingObject updated details
+     * @param {Object} bookingMealId booking meal's id
      */
-    static cancelBookingMeal(bookingId){
+    static cancelBookingMeal(bookingMealId){
         return new Promise(async (resolve, reject) => {
             try{
 
