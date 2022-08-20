@@ -9,6 +9,10 @@ const mealSchema = new mongoose.Schema({
     quantity:{
         type: Number,
         require: true
+    },
+    booking:{
+        type: objectId,
+        ref:'Booking'
     }
 },{
     timestamps: true

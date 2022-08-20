@@ -73,11 +73,7 @@ const bookingSchema = new mongoose.Schema({
     bookingCode:{
         type: String,
         require: true
-    },
-    meals:[{
-        type: objectId,
-        ref:'BookingMeal'
-    }]
+    }
 },{
     timestamps: true
 });
