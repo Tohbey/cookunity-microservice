@@ -53,7 +53,7 @@ const bookingSchema = new mongoose.Schema({
     status:{
         type: String,
         require: true,
-        enum:["Open", "Accepted", "Negotiating"]
+        enum:["Open", "Accepted", "Negotiating", "Close"]
     },
     price:{
         type:Number,
