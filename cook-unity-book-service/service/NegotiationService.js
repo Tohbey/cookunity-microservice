@@ -9,7 +9,18 @@ class NegotiationService{
     static create(body){
         return new Promise(async (resolve, reject) => {
             try{
+                const negotiation = await Negotiation.findOne({
+                    booking: body.booking
+                })
+                if(negotiation){
+                    const updatedNegotiation = await this.updateNegotiation(body._id, body)
+                    resolve(updatedNegotiation);
+                }
 
+                const newNegotiation = new Negotiation(body);
+                await newNegotiation.save();
+
+                resolve(newNegotiation);
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
@@ -22,10 +33,15 @@ class NegotiationService{
      * @param pageSize
      * @param {Object} filter filter
      */
-    static getNegotiation(skip,pageSize,filter={}){
+    static getAllNegotiations(skip,pageSize,filter={}){
         return new Promise(async (resolve, reject) => {
             try{
+                const negotiations = await Negotiation.find(filter)
+                    .skip(skip).limit(pageSize);
 
+                const total = await Negotiation.find(filter).countDocuments();
+
+                resolve({negotiations, total});
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
@@ -39,7 +55,12 @@ class NegotiationService{
     static getNegotiation(filter){
         return new Promise(async (resolve, reject) => {
             try{
+                const negotiation = await Negotiation.findOne(filter);
+                if(!negotiation){
+                    return reject({ statusCode: 404, msg: MSG_TYPES.NOT_FOUND });
+                }
 
+                resolve(negotiation);
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
@@ -54,21 +75,18 @@ class NegotiationService{
     static updateNegotiation(negotiationId, negotiationIdObject){
         return new Promise(async (resolve, reject) => {
             try{
+                const negotiation = await Negotiation.findById(negotiationId);
 
-            }catch (error) {
-                reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
-            }
-        })
-    }
+                if (!negotiation) {
+                    return reject({ statusCode: 404, msg: MSG_TYPES.NOT_FOUND });
+                }
 
-    /**
-     * Remove Negotiation
-     * @param {Object} negotiationId negotiation's id
-     */
-    static cancelNegotiation(negotiationId){
-        return new Promise(async (resolve, reject) => {
-            try{
-
+                await negotiation.updateOne(
+                    {
+                        $set: negotiationIdObject
+                    }
+                );
+                resolve(negotiation);
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
