@@ -9,7 +9,20 @@ class BookingMealService{
     static create(body){
         return new Promise(async (resolve, reject) => {
             try{
+                const meal = await BookingMeal.findOne({
+                    name: body.name,
+                    booking: body.booking
+                });
 
+                if(meal){
+                    reject({ statusCode: 404, msg: MSG_TYPES.EXIST });
+                    return;
+                }
+
+                const newMeal = new BookingMeal(body);
+                await newMeal.save();
+
+                resolve(newMeal);
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
@@ -25,7 +38,12 @@ class BookingMealService{
     static getBookingMeals(skip,pageSize,filter={}){
         return new Promise(async (resolve, reject) => {
             try{
+                const meals = await BookingMeal.find(filter)
+                    .skip(skip).limit(pageSize);
 
+                const total = await BookingMeal.find(filter).countDocuments();
+
+                resolve({meals, total});
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
@@ -39,7 +57,12 @@ class BookingMealService{
     static getBookingMeal(filter){
         return new Promise(async (resolve, reject) => {
             try{
+                const meal = await BookingMeal.findOne(filter);
+                if(!meal){
+                    return reject({ statusCode: 404, msg: MSG_TYPES.NOT_FOUND });
+                }
 
+                resolve(meal);
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
@@ -54,7 +77,18 @@ class BookingMealService{
     static updateBookingMeal(bookingMealId, bookingMealObject){
         return new Promise(async (resolve, reject) => {
             try{
+                const meal = await BookingMeal.findById(bookingMealId);
 
+                if (!meal) {
+                    return reject({ statusCode: 404, msg: MSG_TYPES.NOT_FOUND });
+                }
+
+                await meal.updateOne(
+                    {
+                        $set: bookingMealObject
+                    }
+                );
+                resolve(meal);
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
@@ -65,10 +99,19 @@ class BookingMealService{
      * Remove Booking Meal
      * @param {Object} bookingMealId booking meal's id
      */
-    static cancelBookingMeal(bookingMealId){
+    static removeBookingMeal(bookingMealId){
         return new Promise(async (resolve, reject) => {
             try{
+                const bookingMeal = await BookingMeal.findOne({
+                    _id: bookingMealId
+                });
+                if (!bookingMeal) {
+                    return reject({ statusCode: 404, msg: MSG_TYPES.NOT_FOUND });
+                }
 
+                await bookingMeal.delete();
+
+                resolve({ msg: MSG_TYPES.DELETED });
             }catch (error) {
                 reject({statusCode:500, msg: MSG_TYPES.SERVER_ERROR, error});
             }
