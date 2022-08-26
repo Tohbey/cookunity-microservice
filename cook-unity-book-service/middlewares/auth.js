@@ -13,7 +13,8 @@ const ROLES = {
 
 const Auth = (req, res, next) => {
     const token = req.header('x-auth-token');
-    if (!token) return JsonResponse(res, 401, MSG_TYPES.ACCESS_DENIED);
+    const bearerToken = req.header('Token')
+    if (!token && !bearerToken) return JsonResponse(res, 401, MSG_TYPES.ACCESS_DENIED);
 
     try {
         req.user = jwt.decode(token, jwtSecret)
