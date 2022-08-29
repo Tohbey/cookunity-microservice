@@ -19,4 +19,6 @@ router.patch("cancel/:bookingId", Auth,controller.booking.cancelBooking);
 
 router.patch("/:bookingId", Auth,controller.booking.updateBooking);
 
+router.get("/meals/:bookingId", Auth, controller.bookingMeal.getBookingMealsForBooking)
+
 module.exports = router;
