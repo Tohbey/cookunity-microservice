@@ -98,12 +98,14 @@ class BookingMealService{
     /**
      * Remove Booking Meal
      * @param {Object} bookingMealId booking meal's id
+     * @param {Object} bookingId booking  id
      */
-    static removeBookingMeal(bookingMealId){
+    static removeBookingMeal(bookingMealId, bookingId){
         return new Promise(async (resolve, reject) => {
             try{
                 const bookingMeal = await BookingMeal.findOne({
-                    _id: bookingMealId
+                    _id: bookingMealId,
+                    booking: bookingId
                 });
                 if (!bookingMeal) {
                     return reject({ statusCode: 404, msg: MSG_TYPES.NOT_FOUND });
