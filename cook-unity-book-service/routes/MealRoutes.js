@@ -4,7 +4,7 @@ const {Auth} = require("../middlewares/auth");
 
 router.post("/", Auth, controller.bookingMeal.create)
 
-router.get("/", Auth, controller.bookingMeal.getBookingMeal)
+router.get("/single", Auth, controller.bookingMeal.getBookingMeal)
 
 router.get("/:bookingMealId", Auth, controller.bookingMeal.getBookingMealById)
 
