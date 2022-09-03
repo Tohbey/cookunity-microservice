@@ -30,6 +30,6 @@ const negotiationSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Negotiation = mongoose.model("BookingMeal", negotiationSchema);
+const Negotiation = mongoose.model("Negotiation", negotiationSchema);
 
 module.exports = Negotiation;
