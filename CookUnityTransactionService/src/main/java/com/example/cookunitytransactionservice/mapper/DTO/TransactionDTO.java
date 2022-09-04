@@ -1,5 +1,6 @@
 package com.example.cookunitytransactionservice.mapper.DTO;
 
+import com.example.cookunitytransactionservice.model.Card;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -10,11 +11,12 @@ import java.util.UUID;
 public class TransactionDTO {
     private UUID id;
     private String customerId;
-    private String customerFullName;
+    private String customerName;
     private String chefId;
-    private String chefFullName;
+    private String chefName;
     private String Status;
     private String type;
+    private Card cardDetail;
     private Double amount;
     private String transactionCode;
     private String address;

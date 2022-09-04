@@ -1,5 +1,6 @@
 package com.example.cookunitytransactionservice.model;
 
+import com.example.cookunitytransactionservice.dtos.TransactionStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,17 +23,21 @@ public class Transaction extends BaseEntity{
     }
 
     private String customerId;
+    private String customerName;
     private String chefId;
+    private String chefName;
     private String bookingId;
 
     @Enumerated(EnumType.STRING)
-    private Flag status;
+    private TransactionStatus status;
 
     private String type;
     private Double amount;
     private String transactionCode;
     private String address;
     private String paymentMethod;
+
+    private UUID cardDetail;
 
     @CreationTimestamp
     @Column(name = "created_at")
