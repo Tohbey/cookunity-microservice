@@ -16,7 +16,7 @@ public class TransactionDTO {
     private String chefName;
     private String Status;
     private String type;
-    private Card cardDetail;
+    private CardDTO cardDetail;
     private Double amount;
     private String transactionCode;
     private String address;
