@@ -8,15 +8,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CardService {
-    CardDTO createCard(Card card);
+    CardDTO createCard(Card card) throws Exception;
 
-    List<CardDTO> getCardsByUser(String user);
+    List<CardDTO> getCardsByUser(UUID user);
 
-    Optional<Card> getCard(UUID id);
+    Optional<CardDTO> getCard(UUID id);
 
     CardDTO credit(UUID cardId, Double amount);
 
     CardDTO debit();
 
-    CardDTO blockCard();
+    CardDTO blockCard(UUID id);
 }

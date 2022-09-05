@@ -21,6 +21,7 @@ public class Card extends BaseEntity{
     private String cvv;
     private String expireDate;
     private String pin;
+    private String cardNumber;
     private Double amount;
     private String cardHolder;
     private UUID userId;
