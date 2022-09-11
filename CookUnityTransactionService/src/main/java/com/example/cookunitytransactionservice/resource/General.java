@@ -20,7 +20,7 @@ public interface General {
     String SUSPENDED =  "Account is suspended!";
     String ACCOUNT_NOTVERIFIED =  "Account is not verified!";
     String DISABLED =  "Account is disabled!";
-    String ACCOUNT_UNVERIFIED =  "Account is unverified!";
+    String CARD_BLOCKED =  "Card has been blocked!";
     String NOT_FOUND =  "Not Found";
     String PERMISSION =  "You don't have enough permission to perform this action";
     String SERVER_ERROR =  "Server Error!";
