@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<ResponseObject<UserDTO>> getUser(@PathVariable UUID id){
+    public ResponseEntity<ResponseObject<UserDTO>> getUser(@PathVariable("id") UUID id){
         ResponseObject<UserDTO> object = new ResponseObject<>();
         try {
             Optional<UserDTO> user = userService.getUser(id);
@@ -66,7 +66,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseObject> deleteUser(@PathVariable UUID id){
+    public ResponseEntity<ResponseObject> deleteUser(@PathVariable("id") UUID id){
         ResponseObject object = new ResponseObject();
         try {
             userService.deleteUser(id);
@@ -97,7 +97,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObject<UserDTO>> update(@RequestBody User user, @PathVariable UUID id){
+    public ResponseEntity<ResponseObject<UserDTO>> update(@RequestBody User user, @PathVariable("id") UUID id){
         ResponseObject<UserDTO> object = new ResponseObject<>();
         try {
             Optional<UserDTO> userDTO = userService.updateUser(user, id);

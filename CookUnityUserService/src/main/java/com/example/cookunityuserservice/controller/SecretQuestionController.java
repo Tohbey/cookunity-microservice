@@ -42,7 +42,7 @@ public class SecretQuestionController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<ResponseObject<SecretQuestionDTO>> getSecretQuestion(@PathVariable UUID id){
+    public ResponseEntity<ResponseObject<SecretQuestionDTO>> getSecretQuestion(@PathVariable("id") UUID id){
         ResponseObject<SecretQuestionDTO> object = new ResponseObject<>();
         try {
             Optional<SecretQuestionDTO> questions = secretQuestionService.getSecretQuestion(id);
