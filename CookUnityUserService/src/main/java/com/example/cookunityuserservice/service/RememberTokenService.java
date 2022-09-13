@@ -14,4 +14,6 @@ public interface RememberTokenService {
     RememberTokenDTO saveToken(RememberToken rememberToken) throws Exception;
 
     void deleteToken(UUID id) throws Exception;
+
+    Optional<RememberToken> getRememberTokenByToken(String token);
 }

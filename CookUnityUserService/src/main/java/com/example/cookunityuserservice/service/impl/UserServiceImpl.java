@@ -69,6 +69,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByEmail(String email) {
+        Optional<User> user = this.userRepository.findUserByEmail(email);
+        if (user.isEmpty()) {
+            throw new NotFoundException("User Not Found. for email value " +email );
+        }
+        return user;
+    }
+
+    @Override
     public UserDTO saveUser(User user) throws Exception {
         Optional<User> checkUser = this.userRepository.findUserByEmail(user.getEmail());
         if (checkUser.isPresent()) {

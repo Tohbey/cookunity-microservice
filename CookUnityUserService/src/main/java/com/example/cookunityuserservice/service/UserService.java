@@ -13,6 +13,8 @@ public interface UserService {
 
     Optional<UserDTO> getUser(UUID id);
 
+    Optional<User> getUserByEmail(String email);
+
     UserDTO saveUser(User user) throws Exception;
 
     void deleteUser(UUID id) throws Exception;
