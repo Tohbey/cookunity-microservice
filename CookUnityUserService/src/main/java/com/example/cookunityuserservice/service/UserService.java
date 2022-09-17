@@ -17,6 +17,9 @@ public interface UserService {
 
     UserDTO saveUser(User user) throws Exception;
 
+    String getUserUrl(Long id);
+
+    String returnUserFullName(User user);
     void deleteUser(Long id) throws Exception;
 
     Optional<UserDTO> updateUser(User user, Long id);

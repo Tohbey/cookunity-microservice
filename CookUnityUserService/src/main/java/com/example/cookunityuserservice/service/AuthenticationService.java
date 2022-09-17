@@ -16,7 +16,7 @@ public interface AuthenticationService {
 
     UserDTO changePassword(ForgotPasswordRequest forgotPasswordRequest) throws Exception;
 
-    UserDTO recover(RecoverRequest recoverRequest);
+    UserDTO recover(RecoverRequest recoverRequest) throws Exception;
 
     Optional<User> reset(String email, String token) throws Exception;
 

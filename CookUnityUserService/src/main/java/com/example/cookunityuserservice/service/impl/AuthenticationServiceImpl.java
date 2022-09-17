@@ -5,10 +5,13 @@ import com.example.cookunityuserservice.config.CustomDetailService;
 import com.example.cookunityuserservice.dtos.*;
 import com.example.cookunityuserservice.exceptions.NotFoundException;
 import com.example.cookunityuserservice.jwt.JwtUtils;
+import com.example.cookunityuserservice.mapper.DTO.RememberTokenDTO;
 import com.example.cookunityuserservice.mapper.DTO.UserDTO;
+import com.example.cookunityuserservice.mapper.mapper.RememberTokenMapper;
 import com.example.cookunityuserservice.mapper.mapper.UserMapper;
 import com.example.cookunityuserservice.model.RememberToken;
 import com.example.cookunityuserservice.model.User;
+import com.example.cookunityuserservice.repository.UserRepository;
 import com.example.cookunityuserservice.service.AuthenticationService;
 import com.example.cookunityuserservice.service.RememberTokenService;
 import com.example.cookunityuserservice.service.UserService;
@@ -20,22 +23,28 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
+    private final RememberTokenMapper rememberTokenMapper;
     private final CustomDetailService customDetailService;
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final UserMapper userMapper;
     private final RememberTokenService rememberTokenService;
+
+    private final UserRepository userRepository;
     private final JwtUtils jwtTokenUtil;
 
     public AuthenticationServiceImpl(PasswordEncoder passwordEncoder, UserMapper userMapper, AuthenticationManager authenticationManager,
                                      CustomDetailService customDetailService, RememberTokenService rememberTokenService, JwtUtils jwtTokenUtil,
-                                     UserService userService){
+                                     UserService userService, RememberTokenMapper rememberTokenMapper,
+                                     UserRepository userRepository){
         this.passwordEncoder = passwordEncoder;
         this.customDetailService = customDetailService;
         this.userService = userService;
@@ -43,6 +52,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.userMapper = userMapper;
         this.jwtTokenUtil = jwtTokenUtil;
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.rememberTokenMapper = rememberTokenMapper;
     }
 
 
@@ -101,18 +112,86 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public UserDTO recover(RecoverRequest recoverRequest) {
-        return null;
+    public UserDTO recover(RecoverRequest recoverRequest) throws Exception {
+        Optional<User> user = userService.getUserByEmail(recoverRequest.getEmail());
+        if (user.isEmpty()) {
+            throw new NotFoundException("User Not Found. for EMAIL value " + recoverRequest.getEmail());
+        }
+
+        String token = userService.generateRandomToken(20);
+        RememberToken passwordRetrieve = new RememberToken();
+        passwordRetrieve.setToken(token);
+
+        //adding 20 minutes to the current time
+        Calendar present = Calendar.getInstance();
+        long timeInSecs = present.getTimeInMillis();
+        Date expiredAt = new Date(timeInSecs + (20 * 60 * 1000));
+
+        //save token
+        passwordRetrieve.setUser(user.get());
+        passwordRetrieve.setExpiredAt(expiredAt);
+        RememberTokenDTO savedPasswordRetrieveTokenDTO = rememberTokenService.saveToken(passwordRetrieve);
+
+        //password retrieve token dto
+        savedPasswordRetrieveTokenDTO.setUserURL(this.userService.getUserUrl(user.get().getId()));
+
+        user.get().setToken(this.rememberTokenMapper.rememberTokenDTOToRememberToken(savedPasswordRetrieveTokenDTO));
+
+        Optional<UserDTO> returnDTO = userService.updateUser(user.get(), user.get().getId());
+
+        returnDTO.get().setUserUrl(this.userService.getUserUrl(user.get().getId()));
+        returnDTO.get().setFullName(this.userService.returnUserFullName(user.get()));
+        returnDTO.get().setToken(savedPasswordRetrieveTokenDTO);
+
+        return returnDTO.get();
     }
 
     @Override
     public Optional<User> reset(String email, String token) throws Exception {
-        return Optional.empty();
+        Optional<User> user = this.userService.getUserByEmail(email);
+        if (user.isEmpty()) {
+            throw new NotFoundException("User Not Found. for EMAIL value " + email);
+        }
+
+        Optional<RememberToken> passwordRetrieve = this.rememberTokenService.getRememberTokenByToken(token);
+        if (passwordRetrieve.isEmpty()) {
+            throw new NotFoundException("Token Not Found. for TOKEN value " + token);
+        }
+
+        if (!user.get().getToken().getToken().equals(passwordRetrieve.get().getToken())) {
+            throw new Exception("Incorrect Token");
+        }
+
+        return user;
     }
 
     @Override
     public UserDTO resetPassword(ResetPasswordRequest resetPasswordRequest) throws Exception {
-        return null;
+        Optional<User> user = reset(resetPasswordRequest.getEmail(), resetPasswordRequest.getToken());
+
+        String encryptPwd = passwordEncoder.encode(resetPasswordRequest.getPassword());
+        user.get().setPassword(encryptPwd);
+
+        Optional<RememberToken> passwordRetrieve = this.rememberTokenService.getRememberTokenByToken(resetPasswordRequest.getToken());
+        if (passwordRetrieve.isEmpty()) {
+            throw new NotFoundException("Token Not Found. for TOKEN value " + resetPasswordRequest.getToken());
+        }
+        this.rememberTokenService.deleteToken(passwordRetrieve.get().getId());
+
+        user.get().setToken(null);
+        User savedUser = user.map(user1 -> {
+            user1.setPassword(user.get().getPassword());
+
+            return this.userRepository.save(user1);
+        }).orElseGet(() -> {
+            return userRepository.save(user.get());
+        });
+
+        UserDTO userDTO = userMapper.userToUserDTO(savedUser);
+        userDTO.setUserUrl(this.userService.getUserUrl(userDTO.getId()));
+        userDTO.setFullName(this.userService.returnUserFullName(savedUser));
+
+        return userDTO;
     }
 
     @Override

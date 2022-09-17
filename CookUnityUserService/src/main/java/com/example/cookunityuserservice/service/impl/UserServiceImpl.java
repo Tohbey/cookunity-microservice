@@ -43,11 +43,13 @@ public class UserServiceImpl implements UserService {
         ).collect(Collectors.toList());
     }
 
-    private String getUserUrl(Long id) {
+    @Override
+    public String getUserUrl(Long id) {
         return UserController.BASE_URL + "/" + id;
     }
 
-    private String returnUserFullName(User user) {
+    @Override
+    public String returnUserFullName(User user) {
         return user.getLastName() + " " + user.getOtherNames();
     }
     @Override
