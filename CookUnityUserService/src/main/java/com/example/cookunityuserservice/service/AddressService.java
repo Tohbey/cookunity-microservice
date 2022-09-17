@@ -5,16 +5,15 @@ import com.example.cookunityuserservice.model.Address;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface AddressService {
-    List<AddressDTO> getAddressesForCurrentUser(UUID userId);
+    List<AddressDTO> getAddressesForCurrentUser(Long userId);
 
-    Optional<AddressDTO> getAddress(UUID id);
+    Optional<AddressDTO> getAddress(Long id);
 
-    void deleteAddress(UUID id);
+    void deleteAddress(Long id);
 
-    Optional<AddressDTO> updateAddress(Address address,UUID id);
+    Optional<AddressDTO> updateAddress(Address address,Long id);
 
     AddressDTO saveAddress(Address address) throws Exception;
 }

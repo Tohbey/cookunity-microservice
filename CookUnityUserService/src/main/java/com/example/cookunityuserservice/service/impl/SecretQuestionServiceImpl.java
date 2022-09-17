@@ -34,7 +34,7 @@ public class SecretQuestionServiceImpl implements SecretQuestionService{
     }
 
     @Override
-    public Optional<SecretQuestionDTO> getSecretQuestion(UUID id) {
+    public Optional<SecretQuestionDTO> getSecretQuestion(Long id) {
         Optional<SecretQuestion> secretQuestion = findSecretQuestion(id);
 
         SecretQuestionDTO secretQuestionDTO = new SecretQuestionDTO();
@@ -63,7 +63,7 @@ public class SecretQuestionServiceImpl implements SecretQuestionService{
         return secretQuestionDTO;
     }
 
-    private Optional<SecretQuestion> findSecretQuestion(UUID id){
+    private Optional<SecretQuestion> findSecretQuestion(Long id){
         Optional<SecretQuestion> secretQuestion = this.secretQuestionRepository.findById(id);
         if(secretQuestion.isEmpty()){
             throw new NotFoundException("Secret Question not found");

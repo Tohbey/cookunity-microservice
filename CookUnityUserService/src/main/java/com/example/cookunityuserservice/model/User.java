@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class User extends BaseEntity{
 
-    public User(UUID id){
+    public User(Long id){
         super(id);
     }
 

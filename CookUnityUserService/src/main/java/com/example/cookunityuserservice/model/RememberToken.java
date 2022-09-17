@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 public class RememberToken extends BaseEntity{
-    public RememberToken(UUID id){
+    public RememberToken(Long id){
         super(id);
     }
 

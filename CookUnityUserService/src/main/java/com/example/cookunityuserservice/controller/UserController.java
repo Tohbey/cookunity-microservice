@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(UserController.BASE_URL)
@@ -50,7 +49,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<ResponseObject<UserDTO>> getUser(@PathVariable("id") UUID id){
+    public ResponseEntity<ResponseObject<UserDTO>> getUser(@PathVariable("id") Long id){
         ResponseObject<UserDTO> object = new ResponseObject<>();
         try {
             Optional<UserDTO> user = userService.getUser(id);
@@ -66,7 +65,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseObject> deleteUser(@PathVariable("id") UUID id){
+    public ResponseEntity<ResponseObject> deleteUser(@PathVariable("id") Long id){
         ResponseObject object = new ResponseObject();
         try {
             userService.deleteUser(id);
@@ -97,7 +96,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObject<UserDTO>> update(@RequestBody User user, @PathVariable("id") UUID id){
+    public ResponseEntity<ResponseObject<UserDTO>> update(@RequestBody User user, @PathVariable("id") Long id){
         ResponseObject<UserDTO> object = new ResponseObject<>();
         try {
             Optional<UserDTO> userDTO = userService.updateUser(user, id);

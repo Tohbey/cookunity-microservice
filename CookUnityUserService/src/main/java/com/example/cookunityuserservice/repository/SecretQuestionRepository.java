@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface SecretQuestionRepository extends JpaRepository<SecretQuestion, UUID> {
+public interface SecretQuestionRepository extends JpaRepository<SecretQuestion, Long> {
     Optional<SecretQuestion> findSecretQuestionByQuestion(String question);
 }

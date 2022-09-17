@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 public class Address extends BaseEntity{
-    public Address(UUID id){
+    public Address(Long id){
         super(id);
     }
 

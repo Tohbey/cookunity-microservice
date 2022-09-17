@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+import java.lang.Long;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +28,7 @@ public class AddressServiceImpl implements AddressService {
         this.userRepository = userRepository;
     }
     @Override
-    public List<AddressDTO> getAddressesForCurrentUser(UUID userId) {
+    public List<AddressDTO> getAddressesForCurrentUser(Long userId) {
         Optional<User> user = this.userRepository.findById(userId);
         List<Address> addresses = this.addressRepository.findAddressesByUser(user.get());
         return addresses.stream().map(
@@ -42,7 +42,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Optional<AddressDTO> getAddress(UUID id) {
+    public Optional<AddressDTO> getAddress(Long id) {
         Optional<Address> address = findAddress(id);
 
         Optional<AddressDTO> addressDTO = address.map(addressMapper::addressToAddressDTO)
@@ -55,13 +55,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void deleteAddress(UUID id) {
+    public void deleteAddress(Long id) {
         findAddress(id);
         this.addressRepository.deleteById(id);
     }
 
     @Override
-    public Optional<AddressDTO> updateAddress(Address address, UUID id) {
+    public Optional<AddressDTO> updateAddress(Address address, Long id) {
         Optional<Address> currentAddress = findAddress(id);
         return currentAddress.map(address1 -> {
             if(address.getAddress() != null){
@@ -110,7 +110,7 @@ public class AddressServiceImpl implements AddressService {
         return addressDTO;
     }
 
-    private Optional<Address> findAddress(UUID id){
+    private Optional<Address> findAddress(Long id){
         Optional<Address> currentAddress = this.addressRepository.findById(id);
         if(currentAddress.isEmpty()){
             throw new NotFoundException("Address Not Found. for ID value " + id);

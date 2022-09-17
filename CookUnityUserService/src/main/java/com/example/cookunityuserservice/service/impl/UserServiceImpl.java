@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         ).collect(Collectors.toList());
     }
 
-    private String getUserUrl(UUID id) {
+    private String getUserUrl(Long id) {
         return UserController.BASE_URL + "/" + id;
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         return user.getLastName() + " " + user.getOtherNames();
     }
     @Override
-    public Optional<UserDTO> getUser(UUID id) {
+    public Optional<UserDTO> getUser(Long id) {
         Optional<User> user = this.userRepository.findById(id);
 
         if (user.isEmpty()) {
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UUID id) throws Exception {
+    public void deleteUser(Long id) throws Exception {
         Optional<User> checkUser = this.userRepository.findById(id);
         if (checkUser.isPresent()) {
             throw new Exception("A user with this email already exist " + checkUser.get().getEmail());
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> updateUser(User user, UUID id) {
+    public Optional<UserDTO> updateUser(User user, Long id) {
         Optional<User> currentUser = this.userRepository.findById(id);
         if (currentUser.isEmpty()) {
             throw new NotFoundException("User Not Found. for ID value" + id);

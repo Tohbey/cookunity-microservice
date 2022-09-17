@@ -2,16 +2,14 @@ package com.example.cookunityuserservice.service.impl;
 
 import com.example.cookunityuserservice.exceptions.NotFoundException;
 import com.example.cookunityuserservice.mapper.DTO.RememberTokenDTO;
-import com.example.cookunityuserservice.mapper.DTO.SecretQuestionDTO;
 import com.example.cookunityuserservice.mapper.mapper.RememberTokenMapper;
 import com.example.cookunityuserservice.model.RememberToken;
-import com.example.cookunityuserservice.model.SecretQuestion;
 import com.example.cookunityuserservice.repository.RememberTokenRepository;
 import com.example.cookunityuserservice.service.RememberTokenService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
+import java.lang.Long;
 
 @Service
 public class RememberTokenImpl implements RememberTokenService {
@@ -22,7 +20,7 @@ public class RememberTokenImpl implements RememberTokenService {
         this.rememberTokenMapper = rememberTokenMapper;
     }
     @Override
-    public Optional<RememberTokenDTO> getRememberToken(UUID id) {
+    public Optional<RememberTokenDTO> getRememberToken(Long id) {
         Optional<RememberToken> rememberToken = this.rememberTokenRepository.findById(id);
         if(rememberToken.isEmpty()){
             throw new NotFoundException("token not found");
@@ -64,7 +62,7 @@ public class RememberTokenImpl implements RememberTokenService {
     }
 
     @Override
-    public void deleteToken(UUID id) throws Exception {
+    public void deleteToken(Long id) throws Exception {
         Optional<RememberToken> checkToken = this.rememberTokenRepository.findById(id);
         if(checkToken.isEmpty()){
             throw new Exception("Token not found");

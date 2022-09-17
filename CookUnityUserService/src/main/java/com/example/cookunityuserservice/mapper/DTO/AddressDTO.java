@@ -6,11 +6,11 @@ import java.util.UUID;
 
 @Data
 public class AddressDTO {
-    private UUID id;
+    private Long id;
     private String country;
     private String state;
     private String LGA;
     private String address;
     private Boolean isCurrent;
-    private UUID userId;
+    private Long userId;
 }

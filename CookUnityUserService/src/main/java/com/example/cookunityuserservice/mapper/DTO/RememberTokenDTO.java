@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 public class RememberTokenDTO {
-    private UUID id;
+    private Long id;
     private String token;
     private Date expiredAt;
 

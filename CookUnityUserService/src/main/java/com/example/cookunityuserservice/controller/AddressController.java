@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(AddressController.BASE_URL)
@@ -26,7 +25,7 @@ public class AddressController {
     }
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObject<AddressListDTO>> getAddressesByUser(@PathVariable("userId") UUID userId){
+    public ResponseEntity<ResponseObject<AddressListDTO>> getAddressesByUser(@PathVariable("userId") Long userId){
         ResponseObject<AddressListDTO> object = new ResponseObject<>();
         try {
             List<AddressDTO> addresses = addressService.getAddressesForCurrentUser(userId);
@@ -42,7 +41,7 @@ public class AddressController {
     }
 
     @RequestMapping(value = "/{addressId}", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObject<AddressDTO>> getAddressById(@PathVariable("addressId") UUID addressId){
+    public ResponseEntity<ResponseObject<AddressDTO>> getAddressById(@PathVariable("addressId") Long addressId){
         ResponseObject<AddressDTO> object = new ResponseObject<>();
         try {
             Optional<AddressDTO> address = addressService.getAddress(addressId);
@@ -58,7 +57,7 @@ public class AddressController {
     }
 
     @RequestMapping(value = "/{addressId}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseObject> deleteAddress(@PathVariable("addressId") UUID addressId){
+    public ResponseEntity<ResponseObject> deleteAddress(@PathVariable("addressId") Long addressId){
         ResponseObject object = new ResponseObject();
         try {
             addressService.deleteAddress(addressId);
@@ -89,7 +88,7 @@ public class AddressController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObject<AddressDTO>> updateAddress(@RequestBody Address address, @PathVariable("id") UUID id){
+    public ResponseEntity<ResponseObject<AddressDTO>> updateAddress(@RequestBody Address address, @PathVariable("id") Long id){
         ResponseObject<AddressDTO> object = new ResponseObject<>();
         try {
             Optional<AddressDTO> addressDTO = addressService.updateAddress(address, id);

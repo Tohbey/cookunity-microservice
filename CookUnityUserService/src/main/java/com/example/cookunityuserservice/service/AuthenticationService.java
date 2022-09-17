@@ -3,7 +3,6 @@ package com.example.cookunityuserservice.service;
 import com.example.cookunityuserservice.dtos.*;
 import com.example.cookunityuserservice.mapper.DTO.UserDTO;
 import com.example.cookunityuserservice.model.User;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 public class SecretQuestion extends BaseEntity{
-    public SecretQuestion(UUID id){
+    public SecretQuestion(Long id){
         super(id);
     }
 

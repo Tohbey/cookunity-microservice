@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(SecretQuestionController.BASE_URL)
@@ -42,7 +41,7 @@ public class SecretQuestionController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<ResponseObject<SecretQuestionDTO>> getSecretQuestion(@PathVariable("id") UUID id){
+    public ResponseEntity<ResponseObject<SecretQuestionDTO>> getSecretQuestion(@PathVariable("id") Long id){
         ResponseObject<SecretQuestionDTO> object = new ResponseObject<>();
         try {
             Optional<SecretQuestionDTO> questions = secretQuestionService.getSecretQuestion(id);

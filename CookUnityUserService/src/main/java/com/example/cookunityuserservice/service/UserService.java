@@ -5,21 +5,21 @@ import com.example.cookunityuserservice.model.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+import java.lang.Long;
 
 public interface UserService {
 
     List<UserDTO> getAllUser();
 
-    Optional<UserDTO> getUser(UUID id);
+    Optional<UserDTO> getUser(Long id);
 
     Optional<User> getUserByEmail(String email);
 
     UserDTO saveUser(User user) throws Exception;
 
-    void deleteUser(UUID id) throws Exception;
+    void deleteUser(Long id) throws Exception;
 
-    Optional<UserDTO> updateUser(User user, UUID id);
+    Optional<UserDTO> updateUser(User user, Long id);
 
     String generateRandomToken(int length);
 }

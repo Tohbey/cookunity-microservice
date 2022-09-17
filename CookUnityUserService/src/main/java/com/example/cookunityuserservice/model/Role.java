@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 public class Role extends BaseEntity{
-    public Role(UUID id){
+    public Role(Long id){
         super(id);
     }
 
