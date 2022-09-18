@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 public class CardDTO {
-    private UUID id;
+    private Long id;
     private String cardType;
     private String cvv;
     private String expireDate;

@@ -18,7 +18,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 public class Transaction extends BaseEntity{
-    public Transaction(UUID id){
+    public Transaction(Long id){
         super(id);
     }
 
@@ -37,7 +37,7 @@ public class Transaction extends BaseEntity{
     private String address;
     private String paymentMethod;
 
-    private UUID cardDetail;
+    private Long cardDetail;
 
     @CreationTimestamp
     @Column(name = "created_at")

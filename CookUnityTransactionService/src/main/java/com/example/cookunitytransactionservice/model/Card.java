@@ -13,7 +13,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 public class Card extends BaseEntity{
-    public Card(UUID id){
+    public Card(Long id){
         super(id);
     }
 

@@ -5,18 +5,17 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import java.util.Date;
-import java.util.UUID;
 
 @Data
 public class TransactionDTO {
-    private UUID id;
+    private Long id;
     private String customerId;
     private String customerName;
     private String chefId;
     private String chefName;
     private String Status;
     private String type;
-    private CardDTO cardDetail;
+    private CardDTO card;
     private Double amount;
     private String transactionCode;
     private String address;

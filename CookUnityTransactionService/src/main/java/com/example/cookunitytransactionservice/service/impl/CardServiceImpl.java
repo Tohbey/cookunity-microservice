@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,12 +19,10 @@ public class CardServiceImpl implements CardService {
 
     private final CardRepository cardRepository;
     private final CardMapper cardMapper;
-    private final PasswordEncoder passwordEncoder;
 
-    public CardServiceImpl(CardRepository cardRepository, CardMapper cardMapper, PasswordEncoder passwordEncoder1){
+    public CardServiceImpl(CardRepository cardRepository, CardMapper cardMapper){
         this.cardMapper = cardMapper;
         this.cardRepository = cardRepository;
-        this.passwordEncoder = passwordEncoder1;
     }
 
     @Override
@@ -36,7 +33,7 @@ public class CardServiceImpl implements CardService {
         }
 
         card.setStatus(CardStatus.AVAILABLE);
-        card.setPin(passwordEncoder.encode(card.getPin()));
+//        card.setPin(passwordEncoder.encode(card.getPin()));
         Card savedCard = this.cardRepository.save(card);
 
         CardDTO cardDTO = cardMapper.cardToCardDTO(savedCard);
@@ -46,7 +43,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<CardDTO> getCardsByUser(UUID user) {
+    public List<CardDTO> getCardsByUser(Long user) {
         List<Card> cards = cardRepository.findCardsByUserId(user);
         return cards.stream().map(
                 card -> {
@@ -59,7 +56,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardDTO credit(UUID cardId, Double amount) {
+    public CardDTO credit(Long cardId, Double amount) {
         return null;
     }
 
@@ -69,7 +66,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardDTO blockCard(UUID id) {
+    public CardDTO blockCard(Long id) {
         Optional<Card> card = this.cardRepository.findById(id);
         card.get().setCardType(CardStatus.BLOCKED.getName());
 
@@ -77,7 +74,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Optional<CardDTO> getCard(UUID id) {
+    public Optional<CardDTO> getCard(Long id) {
         Optional<Card> card = this.cardRepository.findById(id);
         if(card.isEmpty()){
             throw new NotFoundException("Card Not Found. for ID value " + id);

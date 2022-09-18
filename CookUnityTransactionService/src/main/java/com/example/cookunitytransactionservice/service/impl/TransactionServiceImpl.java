@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +33,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Optional<TransactionDTO> getTransaction(UUID id) {
+    public Optional<TransactionDTO> getTransaction(Long id) {
         Optional<Transaction> transaction = transactionRepository.findById(id);
         if (transaction.isEmpty()) {
             throw new NotFoundException("Transaction Not Found. for ID value " + id);
@@ -42,7 +41,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         Optional<TransactionDTO> transactionDTO = transaction.map(transactionMapper::transactionToTransactionDTO)
                 .map(transactionDTO1 -> {
-                        transactionDTO1.setCardDetail(cardService.getCard(transaction.get().getCardDetail()).get());
+                        transactionDTO1.setCard(cardService.getCard(transaction.get().getCardDetail()).get());
 
                         return transactionDTO1;
                 });
@@ -55,7 +54,7 @@ public class TransactionServiceImpl implements TransactionService {
         return transactions.stream().map(
                 transaction -> {
                     TransactionDTO transactionDTO = transactionMapper.transactionToTransactionDTO(transaction);
-                    transactionDTO.setCardDetail(cardService.getCard(transaction.getCardDetail()).get());
+                    transactionDTO.setCard(cardService.getCard(transaction.getCardDetail()).get());
 
                     return transactionDTO;
                 }
@@ -68,7 +67,7 @@ public class TransactionServiceImpl implements TransactionService {
         return transactions.stream().map(
                 transaction -> {
                     TransactionDTO transactionDTO = transactionMapper.transactionToTransactionDTO(transaction);
-                    transactionDTO.setCardDetail(cardService.getCard(transaction.getCardDetail()).get());
+                    transactionDTO.setCard(cardService.getCard(transaction.getCardDetail()).get());
 
                     return transactionDTO;
                 }
@@ -76,7 +75,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Optional<TransactionDTO> updateTransaction(UUID id, Transaction transaction) {
+    public Optional<TransactionDTO> updateTransaction(Long id, Transaction transaction) {
         Optional<Transaction> currentTransaction = transactionRepository.findById(id);
         if (currentTransaction.isEmpty()) {
             throw new NotFoundException("User Not Found. for ID value" + id);
@@ -95,7 +94,7 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction savedTransaction = transactionRepository.save(transaction);
 
         TransactionDTO returnDTO = transactionMapper.transactionToTransactionDTO(savedTransaction);
-        returnDTO.setCardDetail(cardService.getCard(savedTransaction.getCardDetail()).get());
+        returnDTO.setCard(cardService.getCard(savedTransaction.getCardDetail()).get());
         return returnDTO;
     }
 }

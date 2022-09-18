@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findTransactionsByCustomerId(String customerId);
 
     List<Transaction> findTransactionsByChefId(String chefId);

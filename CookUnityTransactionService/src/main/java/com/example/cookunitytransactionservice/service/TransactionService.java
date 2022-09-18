@@ -5,17 +5,16 @@ import com.example.cookunitytransactionservice.model.Transaction;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface TransactionService {
 
     TransactionDTO saveTransaction(Transaction transaction);
 
-    Optional<TransactionDTO> getTransaction(UUID id);
+    Optional<TransactionDTO> getTransaction(Long id);
 
     List<TransactionDTO> getTransactionsForCustomer(String customerId);
 
     List<TransactionDTO> getTransactionsForChef(String chefId);
 
-    Optional<TransactionDTO> updateTransaction(UUID id, Transaction transaction);
+    Optional<TransactionDTO> updateTransaction(Long id, Transaction transaction);
 }

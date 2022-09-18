@@ -3,7 +3,6 @@ package com.example.cookunitytransactionservice.controller;
 import com.example.cookunitytransactionservice.dtos.ResponseObject;
 import com.example.cookunitytransactionservice.mapper.DTO.CardDTO;
 import com.example.cookunitytransactionservice.mapper.DTO.CardListDTO;
-import com.example.cookunitytransactionservice.mapper.DTO.TransactionDTO;
 import com.example.cookunitytransactionservice.model.Card;
 import com.example.cookunitytransactionservice.resource.General;
 import com.example.cookunitytransactionservice.service.CardService;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(CardController.BASE_URL)
@@ -25,7 +23,7 @@ public class CardController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{cardId}")
-    public ResponseEntity<ResponseObject<CardDTO>> getCardById(@PathVariable("cardId") UUID cardId){
+    public ResponseEntity<ResponseObject<CardDTO>> getCardById(@PathVariable("cardId") Long cardId){
         ResponseObject<CardDTO> object = new ResponseObject<>();
         try {
             CardDTO cardDTO = cardService.getCard(cardId).get();
@@ -41,7 +39,7 @@ public class CardController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{user}")
-    public ResponseEntity<ResponseObject<CardListDTO>> getCardsByUser(@PathVariable("user") UUID user){
+    public ResponseEntity<ResponseObject<CardListDTO>> getCardsByUser(@PathVariable("user") Long user){
         ResponseObject<CardListDTO> object = new ResponseObject<>();
         try {
             CardListDTO cards = new CardListDTO(cardService.getCardsByUser(user));
@@ -73,7 +71,7 @@ public class CardController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/block/{cardId}")
-    public ResponseEntity<ResponseObject<CardDTO>> block(@PathVariable("cardId") UUID card){
+    public ResponseEntity<ResponseObject<CardDTO>> block(@PathVariable("cardId") Long card){
         ResponseObject<CardDTO> object = new ResponseObject<>();
         try {
             CardDTO cardDTO = cardService.blockCard(card);

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(TransactionController.BASE_URL)
@@ -31,7 +30,7 @@ public class TransactionController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{transactionId}")
-    public ResponseEntity<ResponseObject<TransactionDTO>> getTransactionById(@PathVariable("transactionId")UUID transactionId){
+    public ResponseEntity<ResponseObject<TransactionDTO>> getTransactionById(@PathVariable("transactionId")Long transactionId){
         ResponseObject<TransactionDTO> object = new ResponseObject<>();
         try {
             Optional<TransactionDTO> transaction = transactionService.getTransaction(transactionId);
@@ -95,7 +94,7 @@ public class TransactionController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{transactionId}")
-    public ResponseEntity<ResponseObject<TransactionDTO>> updateTransaction(@RequestBody Transaction transaction, @PathVariable("transactionId") UUID transactionId){
+    public ResponseEntity<ResponseObject<TransactionDTO>> updateTransaction(@RequestBody Transaction transaction, @PathVariable("transactionId") Long transactionId){
         ResponseObject<TransactionDTO> object = new ResponseObject<>();
         try {
             Optional<TransactionDTO> transactionDTO = transactionService.updateTransaction(transactionId,transaction);

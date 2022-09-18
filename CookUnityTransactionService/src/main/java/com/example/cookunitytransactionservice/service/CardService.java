@@ -5,18 +5,17 @@ import com.example.cookunitytransactionservice.model.Card;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface CardService {
     CardDTO createCard(Card card) throws Exception;
 
-    List<CardDTO> getCardsByUser(UUID user);
+    List<CardDTO> getCardsByUser(Long user);
 
-    Optional<CardDTO> getCard(UUID id);
+    Optional<CardDTO> getCard(Long id);
 
-    CardDTO credit(UUID cardId, Double amount);
+    CardDTO credit(Long cardId, Double amount);
 
     CardDTO debit();
 
-    CardDTO blockCard(UUID id);
+    CardDTO blockCard(Long id);
 }
