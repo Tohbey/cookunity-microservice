@@ -9,12 +9,12 @@ import java.util.UUID;
 @Data
 public class UserDTO {
     private Long id;
-    private String fullName;
+    private String lastName;
+    private String otherNames;
     private String email;
     private SecretQuestionDTO secretQuestionDTO;
     private String role;
     private RememberTokenDTO token;
-    private String profile;
     private String currentAddress;
     private AddressListDTO addresses;
     private Date createdAt;

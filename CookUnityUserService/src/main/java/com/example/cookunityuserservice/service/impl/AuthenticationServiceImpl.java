@@ -128,7 +128,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Date expiredAt = new Date(timeInSecs + (20 * 60 * 1000));
 
         //save token
-        passwordRetrieve.setUser(user.get());
         passwordRetrieve.setExpiredAt(expiredAt);
         RememberTokenDTO savedPasswordRetrieveTokenDTO = rememberTokenService.saveToken(passwordRetrieve);
 
@@ -140,7 +139,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<UserDTO> returnDTO = userService.updateUser(user.get(), user.get().getId());
 
         returnDTO.get().setUserUrl(this.userService.getUserUrl(user.get().getId()));
-        returnDTO.get().setFullName(this.userService.returnUserFullName(user.get()));
         returnDTO.get().setToken(savedPasswordRetrieveTokenDTO);
 
         return returnDTO.get();
@@ -189,7 +187,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         UserDTO userDTO = userMapper.userToUserDTO(savedUser);
         userDTO.setUserUrl(this.userService.getUserUrl(userDTO.getId()));
-        userDTO.setFullName(this.userService.returnUserFullName(savedUser));
 
         return userDTO;
     }

@@ -26,8 +26,4 @@ public class RememberToken extends BaseEntity{
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
-
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 }

@@ -15,7 +15,7 @@ public interface UserService {
 
     Optional<User> getUserByEmail(String email);
 
-    UserDTO saveUser(User user) throws Exception;
+    UserDTO saveUser(UserDTO userDTO) throws Exception;
 
     String getUserUrl(Long id);
 

@@ -6,9 +6,11 @@ import com.example.cookunityuserservice.mapper.DTO.RememberTokenDTO;
 import com.example.cookunityuserservice.mapper.DTO.UserDTO;
 import com.example.cookunityuserservice.mapper.mapper.UserMapper;
 import com.example.cookunityuserservice.model.RememberToken;
+import com.example.cookunityuserservice.model.SecretQuestion;
 import com.example.cookunityuserservice.model.User;
 import com.example.cookunityuserservice.repository.UserRepository;
 import com.example.cookunityuserservice.service.RememberTokenService;
+import com.example.cookunityuserservice.service.SecretQuestionService;
 import com.example.cookunityuserservice.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +22,21 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    private final SecretQuestionService secretQuestionService;
+
     private final RememberTokenService rememberTokenService;
+
     final String alphabet = "0123456789ABCDE";
     final int N = alphabet.length();
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RememberTokenService rememberTokenService){
+    public UserServiceImpl(UserRepository userRepository,
+                           UserMapper userMapper,
+                           RememberTokenService rememberTokenService,
+                           SecretQuestionService secretQuestionService){
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.rememberTokenService = rememberTokenService;
+        this.secretQuestionService = secretQuestionService;
     }
     @Override
     public List<UserDTO> getAllUser() {
@@ -35,7 +44,6 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(
                 user -> {
                     UserDTO userDTO = userMapper.userToUserDTO(user);
-                    userDTO.setFullName(returnUserFullName(user));
                     userDTO.setUserUrl(getUserUrl(user.getId()));
 
                     return userDTO;
@@ -63,7 +71,6 @@ public class UserServiceImpl implements UserService {
         Optional<UserDTO> userDto = user.map(userMapper::userToUserDTO)
                 .map(userDTO -> {
                     userDTO.setUserUrl(getUserUrl(user.get().getId()));
-                    userDTO.setFullName(returnUserFullName(user.get()));
                     return userDTO;
                 });
 
@@ -80,11 +87,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO saveUser(User user) throws Exception {
-        Optional<User> checkUser = this.userRepository.findUserByEmail(user.getEmail());
+    public UserDTO saveUser(UserDTO userDTO) throws Exception {
+        Optional<User> checkUser = this.userRepository.findUserByEmail(userDTO.getEmail());
         if (checkUser.isPresent()) {
             throw new Exception("A user with this email already exist " + checkUser.get().getEmail());
         }
+        Optional<SecretQuestion> secretQuestion = this.secretQuestionService.getSecretQuestion(userDTO.getSecretQuestionDTO().getId());
+
+        User user = this.userMapper.userDTOToUser(userDTO);
+        user.setSecretQuestion(secretQuestion.get());
 
         User savedUser = this.userRepository.save(user);
 
@@ -97,7 +108,6 @@ public class UserServiceImpl implements UserService {
         long timeInSecs = present.getTimeInMillis();
         Date expiredAt = new Date(timeInSecs + (20 * 60 * 1000));
 
-        token.setUser(savedUser);
         token.setExpiredAt(expiredAt);
 
         RememberTokenDTO rememberTokenDTO = rememberTokenService.saveToken(token);
@@ -109,8 +119,8 @@ public class UserServiceImpl implements UserService {
 
         if(returnDTO.isPresent()){
             returnDTO.get().setUserUrl(getUserUrl(returnDTO.get().getId()));
-            returnDTO.get().setFullName(returnUserFullName(savedUser));
             returnDTO.get().setToken(rememberTokenDTO);
+            returnDTO.get().setSecretQuestionDTO(this.secretQuestionService.secretQuestionMapToSecretQuestionDTO(secretQuestion.get()));
         }
 
         return returnDTO.get();
@@ -159,7 +169,6 @@ public class UserServiceImpl implements UserService {
 
         UserDTO returnDTO = userMapper.userToUserDTO(savedUser);
 
-        returnDTO.setFullName(returnUserFullName(savedUser));
         returnDTO.setUserUrl(getUserUrl(savedUser.getId()));
 
         return returnDTO;

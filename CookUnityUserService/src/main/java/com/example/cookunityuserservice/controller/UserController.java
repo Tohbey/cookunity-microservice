@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ResponseObject<UserDTO>> createUser(@RequestBody User user){
+    public ResponseEntity<ResponseObject<UserDTO>> createUser(@RequestBody UserDTO user){
         ResponseObject<UserDTO> object = new ResponseObject<>();
         try {
             UserDTO userDTO = userService.saveUser(user);

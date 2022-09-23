@@ -34,14 +34,18 @@ public class SecretQuestionServiceImpl implements SecretQuestionService{
     }
 
     @Override
-    public Optional<SecretQuestionDTO> getSecretQuestion(Long id) {
-        Optional<SecretQuestion> secretQuestion = findSecretQuestion(id);
-
+    public SecretQuestionDTO secretQuestionMapToSecretQuestionDTO(SecretQuestion secretQuestion) {
         SecretQuestionDTO secretQuestionDTO = new SecretQuestionDTO();
-        secretQuestionDTO.setQuestion(secretQuestion.get().getQuestion());
-        secretQuestionDTO.setId(secretQuestion.get().getId());
 
-        return Optional.of(secretQuestionDTO);
+        secretQuestionDTO.setId(secretQuestionDTO.getId());
+        secretQuestionDTO.setQuestion(secretQuestion.getQuestion());
+
+        return secretQuestionDTO;
+    }
+
+    @Override
+    public Optional<SecretQuestion> getSecretQuestion(Long id) {
+        return findSecretQuestion(id);
     }
 
     @Override

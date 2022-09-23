@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface SecretQuestionService {
     List<SecretQuestionDTO> getAllSecretQuestion();
 
-    Optional<SecretQuestionDTO> getSecretQuestion(Long id);
+    Optional<SecretQuestion> getSecretQuestion(Long id);
 
     SecretQuestionDTO saveSecretQuestion(SecretQuestion secretQuestion) throws Exception;
+
+    SecretQuestionDTO secretQuestionMapToSecretQuestionDTO(SecretQuestion secretQuestion);
 }

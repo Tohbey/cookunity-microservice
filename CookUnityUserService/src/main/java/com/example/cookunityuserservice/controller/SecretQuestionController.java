@@ -41,10 +41,10 @@ public class SecretQuestionController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<ResponseObject<SecretQuestionDTO>> getSecretQuestion(@PathVariable("id") Long id){
-        ResponseObject<SecretQuestionDTO> object = new ResponseObject<>();
+    public ResponseEntity<ResponseObject<SecretQuestion>> getSecretQuestion(@PathVariable("id") Long id){
+        ResponseObject<SecretQuestion> object = new ResponseObject<>();
         try {
-            Optional<SecretQuestionDTO> questions = secretQuestionService.getSecretQuestion(id);
+            Optional<SecretQuestion> questions = secretQuestionService.getSecretQuestion(id);
             object.setData(Collections.singletonList(questions.get()));
             object.setMessage(General.RETRIEVED);
             object.setValid(true);

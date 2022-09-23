@@ -26,12 +26,7 @@ public class RememberTokenImpl implements RememberTokenService {
             throw new NotFoundException("token not found");
         }
 
-        return rememberToken.map(rememberTokenMapper::rememberTokenToRememberTokenDTO)
-                .map(tokenDTO -> {
-                    tokenDTO.setUserURL(rememberToken.get().getUser().getId().toString());
-
-                    return tokenDTO;
-                });
+        return rememberToken.map(rememberTokenMapper::rememberTokenToRememberTokenDTO);
     }
 
     @Override
@@ -47,7 +42,6 @@ public class RememberTokenImpl implements RememberTokenService {
         RememberToken savedToken = this.rememberTokenRepository.save(rememberToken);
 
         RememberTokenDTO returnDTO = this.rememberTokenMapper.rememberTokenToRememberTokenDTO(savedToken);
-        returnDTO.setUserURL(savedToken.getUser().getId().toString());
 
         return returnDTO;
     }
