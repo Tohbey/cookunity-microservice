@@ -15,6 +15,7 @@ public class UserDTO {
     private SecretQuestionDTO secretQuestionDTO;
     private String role;
     private RememberTokenDTO token;
+    private String userPassword;
     private String currentAddress;
     private AddressListDTO addresses;
     private Date createdAt;

@@ -95,23 +95,13 @@ public class UserServiceImpl implements UserService {
         Optional<SecretQuestion> secretQuestion = this.secretQuestionService.getSecretQuestion(userDTO.getSecretQuestionDTO().getId());
 
         User user = this.userMapper.userDTOToUser(userDTO);
+        user.setPassword(userDTO.getUserPassword());
         user.setSecretQuestion(secretQuestion.get());
 
         User savedUser = this.userRepository.save(user);
 
-        //token save.
-        RememberToken token = new RememberToken();
-        token.setToken(generateRandomToken(20));
-
-        //adding 20 minutes to the current time
-        Calendar present = Calendar.getInstance();
-        long timeInSecs = present.getTimeInMillis();
-        Date expiredAt = new Date(timeInSecs + (20 * 60 * 1000));
-
-        token.setExpiredAt(expiredAt);
-
+        RememberToken token = generateToken();
         RememberTokenDTO rememberTokenDTO = rememberTokenService.saveToken(token);
-
         token.setId(rememberTokenDTO.getId());
         savedUser.setToken(token);
 
@@ -124,6 +114,21 @@ public class UserServiceImpl implements UserService {
         }
 
         return returnDTO.get();
+    }
+
+    private RememberToken generateToken(){
+        //token save.
+        RememberToken token = new RememberToken();
+        token.setToken(generateRandomToken(20));
+
+        //adding 20 minutes to the current time
+        Calendar present = Calendar.getInstance();
+        long timeInSecs = present.getTimeInMillis();
+        Date expiredAt = new Date(timeInSecs + (20 * 60 * 1000));
+
+        token.setExpiredAt(expiredAt);
+
+        return token;
     }
 
     @Override
