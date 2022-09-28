@@ -52,7 +52,7 @@ public class UserController {
     public ResponseEntity<ResponseObject<UserDTO>> getUser(@PathVariable("id") Long id){
         ResponseObject<UserDTO> object = new ResponseObject<>();
         try {
-            Optional<UserDTO> user = userService.getUser(id);
+            Optional<UserDTO> user = userService.getUserDTO(id);
             object.setData(Collections.singletonList(user.get()));
             object.setMessage(General.RETRIEVED);
             object.setValid(true);

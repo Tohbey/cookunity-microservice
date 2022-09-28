@@ -60,13 +60,21 @@ public class UserServiceImpl implements UserService {
     public String returnUserFullName(User user) {
         return user.getLastName() + " " + user.getOtherNames();
     }
+
     @Override
-    public Optional<UserDTO> getUser(Long id) {
+    public Optional<User> getUser(Long id) {
         Optional<User> user = this.userRepository.findById(id);
 
         if (user.isEmpty()) {
             throw new NotFoundException("User Not Found. for ID value " + id);
         }
+
+        return user;
+    }
+
+    @Override
+    public Optional<UserDTO> getUserDTO(Long id) {
+        Optional<User> user = this.getUser(id);
 
         Optional<UserDTO> userDto = user.map(userMapper::userToUserDTO)
                 .map(userDTO -> {

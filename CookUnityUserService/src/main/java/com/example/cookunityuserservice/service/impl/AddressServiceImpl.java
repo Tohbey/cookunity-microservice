@@ -8,6 +8,8 @@ import com.example.cookunityuserservice.model.User;
 import com.example.cookunityuserservice.repository.AddressRepository;
 import com.example.cookunityuserservice.repository.UserRepository;
 import com.example.cookunityuserservice.service.AddressService;
+import com.example.cookunityuserservice.service.AuthenticationService;
+import com.example.cookunityuserservice.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,16 +22,20 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public AddressServiceImpl(AddressRepository addressRepository, AddressMapper addressMapper, UserRepository userRepository){
+    private final AuthenticationService authenticationService;
+
+    public AddressServiceImpl(AddressRepository addressRepository, AddressMapper addressMapper, UserService userService, AuthenticationService authenticationService){
         this.addressRepository = addressRepository;
         this.addressMapper = addressMapper;
-        this.userRepository = userRepository;
+        this.userService = userService;
+        this.authenticationService = authenticationService;
     }
     @Override
     public List<AddressDTO> getAddressesForCurrentUser(Long userId) {
-        Optional<User> user = this.userRepository.findById(userId);
+        Optional<User> user = this.userService.getUser(userId);
+
         List<Address> addresses = this.addressRepository.findAddressesByUser(user.get());
         return addresses.stream().map(
                 address -> {
@@ -89,6 +95,9 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDTO saveAddress(Address address) throws Exception {
+        Optional<User> currentUser = this.authenticationService.getCurrentUser();
+
+        address.setUser(currentUser.get());
         Optional<Address> checkAddress = this.addressRepository.findAddressByAddress(address.getAddress());
         if(checkAddress.isPresent()){
             throw new Exception("Duplicate Address found");
