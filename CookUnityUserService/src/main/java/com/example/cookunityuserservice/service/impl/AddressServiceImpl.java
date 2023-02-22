@@ -6,7 +6,6 @@ import com.example.cookunityuserservice.mapper.mapper.AddressMapper;
 import com.example.cookunityuserservice.model.Address;
 import com.example.cookunityuserservice.model.User;
 import com.example.cookunityuserservice.repository.AddressRepository;
-import com.example.cookunityuserservice.repository.UserRepository;
 import com.example.cookunityuserservice.service.AddressService;
 import com.example.cookunityuserservice.service.AuthenticationService;
 import com.example.cookunityuserservice.service.UserService;
@@ -98,16 +97,12 @@ public class AddressServiceImpl implements AddressService {
         Optional<User> currentUser = this.authenticationService.getCurrentUser();
 
         address.setUser(currentUser.get());
-        Optional<Address> checkAddress = this.addressRepository.findAddressByAddress(address.getAddress());
+        Optional<Address> checkAddress = this.addressRepository.findAddressByAddressAndUser(address.getAddress(), currentUser.get());
         if(checkAddress.isPresent()){
             throw new Exception("Duplicate Address found");
         }
 
-        Address savedAddress = this.addressRepository.save(address);
-
-        AddressDTO addressDTO = addressMapper.addressToAddressDTO(savedAddress);
-        addressDTO.setUserId(savedAddress.getUser().getId());
-        return addressDTO;
+        return this.saveAndReturnDTO(address);
     }
 
     private AddressDTO saveAndReturnDTO(Address address){
